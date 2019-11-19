@@ -1,7 +1,12 @@
 use TOYS_ORDERS;
+/* ROLLBACK
 drop table PEOPLE;
 drop table INVENTORY;
+drop table ORDERS;
+drop table PROMOTIONS;
+drop table CART;
 
+*/
 create table PEOPLE (
     PERSON_ID INT PRIMARY KEY,
     PERSON_TYPE INT,
@@ -31,3 +36,10 @@ create table PROMOTIONS (
     INVENTORY_ID INT,
     AMOUNT INT
 );
+
+create table CART {
+    CART_ID INT PRIMARY KEY,
+    INVENTORY_ID INT,
+    QUANTITY INT,
+    PERSON_ID INT 
+};
