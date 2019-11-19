@@ -42,12 +42,52 @@ else {
 		exit;
 	}
 	if ($q_result->num_rows > 0) {
-		echo "<br> Welcome back user: ". $username. "<br \>";
+		$resulting_string = "<br> Welcome back user: ". $username. "<br \>";
+		startShoppingForm($resulting_string);
 	}
 	else {
 		$insert_user = "INSERT INTO PEOPLE(PERSON_TYPE, USERNAME, PW) VALUES (0, '$username', '$password')";
 		$mysqli->query($insert_user);
-		echo "<br> Welcome, ". $username. "! <br \> <br>You've been registered <br \>";
+		$resulting_string = "<br> Welcome, ". $username. "! <br \> <br>You've been registered <br \>";
+		startShoppingForm($resulting_string);
 	}
+	
+}
+function startShoppingForm($input){
+	echo "
+	<body>
+	<Title>Toy Store</Title>
+
+	<h1>Welcome to the Ultimate Toy Shopping Experience</h1>
+
+	<h2>". $input ."</h2>
+	<hr>
+
+	<form action='stafflogin.php' method='post'>
+	<h4>Staff Login</h4>
+	<table>
+	<td>Username:</td> <td><input type='text' name='username'></td>
+	<td>Password:</td> <td><input type='password' name='password'></td>
+	</table>
+	<input type='submit'>
+	</form>
+	<br>
+	<hr>
+	<br>
+	<form action='shopping.php' method='post'>
+	<input type='submit' value='Start Shopping'>
+	</body>
+	<style> 
+	input[type=button], input[type=submit], input[type=reset] {
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	}
+	</style>
+	";
 }
 ?> 
