@@ -13,6 +13,16 @@
 </table>
 <input type="submit">
 </form>
-
+<style>
+     input[type=button], input[type=submit], input[type=reset] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+            }
+</style>
 </body>
 </html>
