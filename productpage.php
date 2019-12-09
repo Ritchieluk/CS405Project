@@ -1,55 +1,76 @@
 <?php
+if (!isset($_POST['cart'])){
+    $product_id = $_POST["name"];
 
-$product_id = $_POST["name"];
+    $host = 'localhost';//enter hostname
+    $userName = 'root';//enter user name of DB
+    $Pass = 'pwd'; //enter password
+    $DB = 'TOYS_ORDERS'; //Enter database name
+    $mysqli = new mysqli($host, $userName,$Pass,$DB);
 
-$host = 'localhost';//enter hostname
-$userName = 'root';//enter user name of DB
-$Pass = 'pwd'; //enter password
-$DB = 'TOYS_ORDERS'; //Enter database name
-$mysqli = new mysqli($host, $userName,$Pass,$DB);
+    if ($mysqli->connect_errno) {
+        echo "Could not connect to database \n";
+        echo "Error: ". $mysqli->connect_error . "\n";
+        exit;
+    } 
+    else {
+        //echo "Checking if user ". $username. " exists </br>";
 
-if ($mysqli->connect_errno) {
-	echo "Could not connect to database \n";
-	echo "Error: ". $mysqli->connect_error . "\n";
-	exit;
-} 
-else {
-	//echo "Checking if user ". $username. " exists </br>";
-
-    // Let's write the query and store it in a variable
-    
-	$user_query = "
-    SELECT * 
-    FROM INVENTORY
-    WHERE (INVENTORY_ID = ".$product_id.")";
-	
-	$q_result = $mysqli->query($user_query);
-	// Execute the query and check for error
-	if ( !$q_result) {
-		echo "Query failed: ". $mysqli->error. "\n";
-		exit;
-	}
-	if ($q_result->num_rows > 0) {
-        while($row = mysqli_fetch_assoc($q_result)){
-            #echo "<span> name: ". $row["AMOUNT"]. " - Price: ". $row["PRICE"] ."</span>";
-            #echo "<span> Description: ". $row["PRODUCT_DESC"]."</span>";
-            setupHTML(buildPurchaseScreen($row["INVENTORY_ID"],$row["PRICE"],$row["PRODUCT_NAME"], $row["AMOUNT"], $row["PRODUCT_DESC"]));
-            //echo "<span> name: ". $row["PRODUCT_NAME"]. " - Price: ". $row["PRICE"] ."</span>";
+        // Let's write the query and store it in a variable
+        
+        $user_query = "
+        SELECT * 
+        FROM INVENTORY
+        WHERE (INVENTORY_ID = ".$product_id.")";
+        
+        $q_result = $mysqli->query($user_query);
+        // Execute the query and check for error
+        if ( !$q_result) {
+            echo "Query failed: ". $mysqli->error. "\n";
+            exit;
         }
-	}
-	else {
-		echo "<h3> Our Inventory is currently empty, please check back some other time </h3>";
-	}
-	
+        if ($q_result->num_rows > 0) {
+            while($row = mysqli_fetch_assoc($q_result)){
+                #echo "<span> name: ". $row["AMOUNT"]. " - Price: ". $row["PRICE"] ."</span>";
+                #echo "<span> Description: ". $row["PRODUCT_DESC"]."</span>";
+                setupHTML(buildPurchaseScreen($row["INVENTORY_ID"],$row["PRICE"],$row["PRODUCT_NAME"], $row["AMOUNT"], $row["PRODUCT_DESC"]));
+                //echo "<span> name: ". $row["PRODUCT_NAME"]. " - Price: ". $row["PRICE"] ."</span>";
+            }
+        }
+        else {
+            echo "<h3> Our Inventory is currently empty, please check back some other time </h3>";
+        }
+        
+    }
+}
+else {
+    addCookies();
+}
+
+function addCookies(){
+    #echo "Adding cookies";
+    if(!isset($_COOKIE[$_COOKIE['current_user']])){
+        $ids = array($_POST['cart']);
+        setcookie($_COOKIE['current_user'], serialize($ids), time()+3600);
+    }
+    else {
+        $data = unserialize($_COOKIE['current_user'], ["allowed_classes" => false]);
+        setcookie($_COOKIE['current_user'], "", time()-3600);
+        array_push($data, $_POST['cart']);
+        setcookie($_COOKIE['current_user'], serialize($data), time()+3600);
+    }
+    $_POST = array();
 }
 
 function buildPurchaseScreen($id, $price, $name, $quantity, $description){
     return "<div class='card'>
-    <img src='".$id.".jpg' alt='Denim Jeans' style='width:100%'>
-    <h1>".$name."</h1>
-    <p class=".$price.">$19.99</p>
-    <p>".$description."</p>
-    <p><button>Add to Cart - (Quantity: ".$quantity.")</button></p>
+    <form action = '' method='post'>
+        <img src='".$id.".jpg' alt='Denim Jeans' style='width:100%'>
+        <h1>".$name."</h1>
+        <p class=".$price.">$19.99</p>
+        <p>".$description."</p>
+        <p><button type='submit' name='cart' value=".$id.">Add to Cart - (Quantity: ".$quantity.")</button></p>
+    </form>
   </div>
   <style>
   .card {
