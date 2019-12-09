@@ -42,6 +42,8 @@ create table PROMOTIONS (
 create table CART (
     INVENTORY_ID INT,
     QUANTITY INT,
-    PERSON_ID INT PRIMARY KEY,
+    PERSON_ID INT,
+
+    primary key(PERSON_ID, INVENTORY_ID)
  
 );
