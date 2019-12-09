@@ -1,7 +1,6 @@
 <?php
 setupHTML("");
 
-#TODO: Query database for inventory
 $host = 'localhost';//enter hostname
 $userName = 'root';//enter user name of DB
 $Pass = 'pwd'; //enter password
@@ -19,7 +18,7 @@ else {
     // Let's write the query and store it in a variable
     echo "<h3> Our Product Line up </h3>";
 	$user_query = "
-	SELECT PRODUCT_NAME, PRICE 
+	SELECT INVENTORY_ID, PRODUCT_NAME, PRICE 
 	FROM INVENTORY
 	WHERE (AMOUNT > 0)";
 	
@@ -31,7 +30,7 @@ else {
 	}
 	if ($q_result->num_rows > 0) {
         while($row = mysqli_fetch_assoc($q_result)){
-            addItem($row["PRODUCT_NAME"], $row["PRICE"]);
+            addItem($row["INVENTORY_ID"],$row["PRODUCT_NAME"], $row["PRICE"]);
             //echo "<span> name: ". $row["PRODUCT_NAME"]. " - Price: ". $row["PRICE"] ."</span>";
         }
 	}
@@ -41,7 +40,7 @@ else {
 	
 }
 
-function addItem($name, $price){
+function addItem($id, $name, $price){
     echo "
     <div>
         <form action='productpage.php' method='post'>
@@ -50,7 +49,7 @@ function addItem($name, $price){
             <td>$".$price." </td>
             <td><input type='submit' value='View Product Page'></td>
         </table>
-        <input type='hidden' name='name' value='".$name."'>
+        <input type='hidden' name='name' value='".$id."'>
         
         </form>
     </div>
