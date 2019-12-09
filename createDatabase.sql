@@ -8,7 +8,6 @@ drop table PROMOTIONS;
 drop table CART;
 
 
-
 create table PEOPLE (
     PERSON_ID INT PRIMARY KEY AUTO_INCREMENT,
     PERSON_TYPE INT,
