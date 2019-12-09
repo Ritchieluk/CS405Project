@@ -121,7 +121,7 @@ function displayInventory() {
 	}
 	if ($q_result->num_rows > 0) {
         while($row = mysqli_fetch_assoc($q_result)){
-            addItem($row["PRODUCT_NAME"], $row["INVENTORY_ID"], $row["AMOUNT"], $row["PRICE"], ($row["PRODUCT_DESC"]);
+            addItem($row["PRODUCT_NAME"], $row["INVENTORY_ID"], $row["AMOUNT"], $row["PRICE"], ($row["PRODUCT_DESC"]));
         }
 	}
 	else {
@@ -142,7 +142,7 @@ function displayOrders() {
 	}
 	if ($q_result->num_rows > 0) {
         while($row = mysqli_fetch_assoc($q_result)){
-            addOrderItem($row["ORDER_ID"], $row["INVENTORY_ID"], $row["PERSON_ID"], $row["ORDER_STATUS"], ($row["QUANTITY"]);
+            addOrderItem($row["ORDER_ID"], $row["INVENTORY_ID"], $row["PERSON_ID"], $row["ORDER_STATUS"], ($row["QUANTITY"]));
         }
 	}
 	else {

@@ -22,11 +22,28 @@ INSERT INTO INVENTORY (INVENTORY_ID, AMOUNT, PRICE, PRODUCT_NAME, PRODUCT_DESC)
 VALUES (6, 29, 27.99, 'Duplos, but Actually Kinda Cool TBH', 'You lowkey want to buy this, but can your social image afford being associated with Duplos?');
 
 INSERT INTO INVENTORY (INVENTORY_ID, AMOUNT, PRICE, PRODUCT_NAME, PRODUCT_DESC)
-VALUES (7, 30, 27.99, 'An Actual Hunting Knife', 'Were one of those stores that has a hunting section in the back for some reason. Perfect gift for your grandaughter.');
+VALUES (7, 30, 27.99, 'An Actual Hunting Knife', 'We''re one of those stores that has a hunting section in the back for some reason. Perfect gift for your grandaughter.');
 
 INSERT INTO INVENTORY (INVENTORY_ID, AMOUNT, PRICE, PRODUCT_NAME, PRODUCT_DESC)
-VALUES (8, 27, 8.99, 'Pokemon Greeting Cards', 'For when you need the perfect card to tell someone: I choose you');
+VALUES (8, 27, 8.99, 'Pokemon Greeting Cards', 'For when you need the perfect card to tell someone: I''m leaving you.');
 
 INSERT INTO INVENTORY (INVENTORY_ID, AMOUNT, PRICE, PRODUCT_NAME, PRODUCT_DESC)
 VALUES (9, 11, 7.99, 'MASSIVE Wheels', 'The perfect toy for any child who wants to absolutely obliterate the other kids and their puny big wheels. With MASSIVE Wheels your child will turn his enemies into a fine pulp');
 
+insert into PEOPLE VALUES (1, 1, 'user', 'pw');
+insert into PEOPLE values (4, 1, 'guy', 'pw');
+insert into PEOPLE VALUES (2, 2, 'employee', 'pw');
+insert into PEOPLE VALUES (3, 3, 'manager', 'pw');
+
+insert into ORDERS values (1, 1, 1, 'pending', 1);
+insert into ORDERS values (1, 2, 1, 'pending', 1);
+insert into ORDERS values (2, 4, 4, 'shipped', 3);
+insert into ORDERS values (3, 6, 1, 'completed', 2);
+
+insert into PROMOTIONS values (1, 1, 10);
+insert into PROMOTIONS values (2, 5, 18);
+insert into PROMOTIONS values (3, 8, 69);
+
+insert into CART values (2, 1, 1);
+insert into CART values (3, 2, 1);
+insert into CART values (8, 15, 1);
