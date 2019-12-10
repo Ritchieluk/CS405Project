@@ -63,6 +63,7 @@ function addCookies(){
 }
 
 function buildPurchaseScreen($id, $price, $name, $quantity, $description){
+    $id -= 1;
     return "<div class='card'>
     <form action = '' method='post'>
         <img src='".$id.".jpg' alt='Denim Jeans' style='width:100%'>

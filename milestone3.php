@@ -6,55 +6,62 @@
 // remember, we stored them in a "post" variable called "professor"
 $username = $_POST["username"];
 $password = $_POST["password"];
-setcookie("current_user", $username, time()+3600, '/');
+if ($username != null){
+	setcookie("current_user", $username, time()+3600, '/');
+}
 if(($username == null || $password == null) && !isset($_COOKIE["current_user"])){
 	header("Location: ./homepage.php");
 }
+if (!($username == null && $password == null)){
+	// Now, we will create a mysqli object and connect to database
+	$host = 'localhost';//enter hostname
+	$userName = 'root';//enter user name of DB
+	$Pass = 'pwd'; //enter password
+	$DB = 'TOYS_ORDERS'; //Enter database name
+	$mysqli = new mysqli($host, $userName,$Pass,$DB);
 
-// Now, we will create a mysqli object and connect to database
-$host = 'localhost';//enter hostname
-$userName = 'root';//enter user name of DB
-$Pass = 'pwd'; //enter password
-$DB = 'TOYS_ORDERS'; //Enter database name
-$mysqli = new mysqli($host, $userName,$Pass,$DB);
-
-// Check for connection error
-// If there is an error we will use $mysqli->connect_error
-// to print the cause of the error
-if ($mysqli->connect_errno) {
-	echo "Could not connect to database \n";
-	echo "Error: ". $mysqli->connect_error . "\n";
-	exit;
-} 
-else {
-	//echo "Checking if user ". $username. " exists </br>";
-
-	// Let's write the query and store it in a variable
-	$user_query = "
-	SELECT USERNAME, PW 
-	FROM PEOPLE 
-	WHERE (USERNAME = '$username' AND PW = '$password')";
-	
-	$q_result = $mysqli->query($user_query);
-	// Execute the query and check for error
-	if ( !$q_result) {
-		echo "Query failed: ". $mysqli->error. "\n";
-		setcookie("current_user", "", time()-3600);
+	// Check for connection error
+	// If there is an error we will use $mysqli->connect_error
+	// to print the cause of the error
+	if ($mysqli->connect_errno) {
+		echo "Could not connect to database \n";
+		echo "Error: ". $mysqli->connect_error . "\n";
 		exit;
-	}
-	if ($q_result->num_rows > 0) {
-		$resulting_string = "<br> Welcome back user: ". $username. "<br \>";
-		startShoppingForm($resulting_string);
-	}
+	} 
 	else {
-		$insert_user = "INSERT INTO PEOPLE(PERSON_TYPE, USERNAME, PW) VALUES (1, '$username', '$password')";
-		$q_result = $mysqli->query($insert_user);
-		echo $q_result;
-		$resulting_string = "<br> Welcome, ". $username. "! <br \> <br>You've been registered <br \>";
-		startShoppingForm($resulting_string);
+		//echo "Checking if user ". $username. " exists </br>";
+
+		// Let's write the query and store it in a variable
+		$user_query = "
+		SELECT USERNAME, PW 
+		FROM PEOPLE 
+		WHERE (USERNAME = '$username' AND PW = '$password')";
+		
+		$q_result = $mysqli->query($user_query);
+		// Execute the query and check for error
+		if ( !$q_result) {
+			echo "Query failed: ". $mysqli->error. "\n";
+			setcookie("current_user", "", time()-3600);
+			exit;
+		}
+		if ($q_result->num_rows > 0) {
+			$resulting_string = "<br> Welcome back user: ". $username. "<br \>";
+			startShoppingForm($resulting_string);
+		}
+		else {
+			$insert_user = "INSERT INTO PEOPLE(PERSON_TYPE, USERNAME, PW) VALUES (1, '$username', '$password')";
+			$q_result = $mysqli->query($insert_user);
+			echo $q_result;
+			$resulting_string = "<br> Welcome, ". $username. "! <br \> <br>You've been registered <br \>";
+			startShoppingForm($resulting_string);
+			
+		}
 		
 	}
-	
+}
+else {
+	$resulting_string = "<br> Welcome, ". $_COOKIE["current_user"]. "! <br \>  ";
+	startShoppingForm($resulting_string);
 }
 function startShoppingForm($input){
 	echo "

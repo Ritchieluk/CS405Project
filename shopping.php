@@ -16,7 +16,7 @@ else {
 	//echo "Checking if user ". $username. " exists </br>";
 
     // Let's write the query and store it in a variable
-    echo "<h3> Our Product Line up </h3>";
+    echo "<h3> Orders for user ". $_COOKIE["current_user"]." </h3>";
 	$user_query = "
 	SELECT INVENTORY_ID, PRODUCT_NAME, PRICE 
 	FROM INVENTORY

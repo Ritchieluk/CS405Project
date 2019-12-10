@@ -1,11 +1,11 @@
 use TOYS_ORDERS;
 /* ROLLBACK */
 
-drop table PEOPLE;
-drop table INVENTORY;
-drop table ORDERS;
-drop table PROMOTIONS;
-drop table CART;
+-- drop table PEOPLE;
+-- drop table INVENTORY;
+-- drop table ORDERS;
+-- drop table PROMOTIONS;
+-- drop table CART;
 
 
 create table PEOPLE (
