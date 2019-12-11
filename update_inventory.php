@@ -1,6 +1,53 @@
 <?php
+$id = $_POST['id'];
 
+$host = 'localhost';//enter hostname
+$userName = 'root';//enter user name of DB
+$Pass = 'pwd'; //enter password
+$DB = 'TOYS_ORDERS'; //Enter database name
+$mysqli = new mysqli($host, $userName,$Pass,$DB);
 setupHTML("Update Inventory Screen");
+if ($mysqli->connect_errno) {
+	echo "Could not connect to database \n";
+	echo "Error: ". $mysqli->connect_error . "\n";
+	exit;
+} 
+else {
+    $user_query = "
+    SELECT * 
+    FROM INVENTORY
+    WHERE INVENTORY_ID=".$id;
+
+    $q_result = $mysqli->query($user_query);
+
+    if ( !$q_result) {
+        echo "Query failed: ". $mysqli->error. "\n";
+        exit;
+    }
+    else if ($q_result->num_rows > 0){
+        # Insert new cart with this user
+        $row = mysqli_fetch_assoc($q_result);
+        echo $row['INVENTORY_ID'];
+        echo "
+        <h3> Update Item: </h3>
+        <form action='stafflogin.php' method='post'>
+            <table class='customers'>
+            <tr>
+                <td>Product Name:</td> <td><input type='text' value='".$row['PRODUCT_NAME']."' name='name'></td>
+                <td>Amount:</td> <td><input type='number' value='".$row['AMOUNT']."' name='amount'></td>
+                <td>Price:</td> <td><input type='number' value='".$row['PRICE']."' name='price' step='0.01'></td>
+                <td>Description:</td> <td><input type='text' value='".$row['PRODUCT_DESC']."' name='description'></td>
+            </tr>
+            </table>
+            <input type='submit' name='action_type' value='Update Item in Inventory'>
+            <input type='hidden' name='update_id' value='".$row['INVENTORY_ID']."'>
+        </form>
+        ";
+    }
+
+}
+
+
 
 function setupHTML($input){
 	echo "
@@ -28,6 +75,9 @@ function setupHTML($input){
     
         li a:hover {
         background-color: #111;
+        }
+        input {
+            padding: 10px;
         }
         </style>
         </head>

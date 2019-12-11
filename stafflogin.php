@@ -13,6 +13,9 @@ else if ($action == 'Ship It!'){
 else if ($action == 'Add Item to Inventory'){
     addIt();
 }
+else if ($action == 'Update Item in Inventory'){
+    updateIt();
+}
 if ($username != null || $password != null){
     setcookie("employee", "", time()-3600);
     setcookie("employee", $_COOKIE['employee'], -1);
@@ -125,6 +128,32 @@ function shipIt(){
 		exit;
 	}
     
+}
+
+function updateIt(){
+    $id = $_POST['update_id'];
+    $name = $_POST['name'];
+    $amount = $_POST['amount'];
+    $price = $_POST['price'];
+    $description = $_POST['description'];
+
+    $host = 'localhost';//enter hostname
+    $userName = 'root';//enter user name of DB
+    $Pass = 'pwd'; //enter password
+    $DB = 'TOYS_ORDERS'; //Enter database name
+    $mysqli = new mysqli($host, $userName,$Pass,$DB);
+    echo $id;
+    $user_query = "
+    UPDATE INVENTORY
+    SET AMOUNT=".$amount.", PRICE=".$price.", PRODUCT_NAME='".$name."', PRODUCT_DESC='".$description."'
+    WHERE (INVENTORY_ID = ".$id.")";
+	
+	$q_result = $mysqli->query($user_query);
+	// Execute the query and check for error
+	if ( !$q_result) {
+		echo "Query failed: ". $mysqli->error. "\n";
+		exit;
+	}
 }
 
 function addIt(){

@@ -1,7 +1,94 @@
 <?php
+$id = $_POST["customer_id"];
+
+$host = 'localhost';//enter hostname
+$userName = 'root';//enter user name of DB
+$Pass = 'pwd'; //enter password
+$DB = 'TOYS_ORDERS'; //Enter database name
+$mysqli = new mysqli($host, $userName,$Pass,$DB);
+
 
 setupHTML();
-echo $_POST['customer_id'];
+
+if ($mysqli->connect_errno) {
+	echo "Could not connect to database \n";
+	echo "Error: ". $mysqli->connect_error . "\n";
+	exit;
+} 
+else {
+    $user_query = "
+    SELECT COUNT(ORDER_ID)
+    FROM ORDERS
+    ";
+    $order_id;
+    $q_result = $mysqli->query($user_query);
+    if ( !$q_result) {
+        echo "INSERT Query failed: ". $mysqli->error. "\n";
+        exit;
+    }
+    else {
+        $row = mysqli_fetch_assoc($q_result);
+        $order_id = $row["COUNT(ORDER_ID)"]; 
+    }
+    $user_query = "
+    SELECT PERSON_ID
+    FROM PEOPLE
+    WHERE USERNAME='".$id."'";
+
+    $q_result = $mysqli->query($user_query);
+    if ( !$q_result) {
+        echo "PEOPLE Query failed: ". $mysqli->error. "\n";
+        exit;
+    }
+    $row = mysqli_fetch_assoc($q_result);
+    $user_id = $row["PERSON_ID"];
+    $user_query = "
+    SELECT INVENTORY_ID, QUANTITY
+    FROM CART
+    WHERE PERSON_ID=".$user_id;
+
+    $q_result = $mysqli->query($user_query);
+
+    if ( !$q_result) {
+        echo "Query failed: ". $mysqli->error. "\n";
+        exit;
+    }
+    else if ($q_result->num_rows > 0){
+        
+        while($row = mysqli_fetch_assoc($q_result)){
+            $user_query = "
+            INSERT 
+            INTO ORDERS (ORDER_ID, INVENTORY_ID, PERSON_ID, ORDER_STATUS, QUANTITY)
+            VALUES (".$order_id.", ".$row["INVENTORY_ID"].", ".$user_id.",'pending',".$row["QUANTITY"].")";
+
+            $query_result = $mysqli->query($user_query);
+            if ( !$query_result) {
+                echo "INSERT Query failed: ". $mysqli->error. "\n";
+                exit;
+            }
+
+        }
+        $user_query = "
+        DELETE
+        FROM CART
+        WHERE PERSON_ID=".$user_id;
+
+        $q_result = $mysqli->query($user_query);
+
+        if ( !$q_result) {
+            echo "DELETE Query failed: ". $mysqli->error. "\n";
+            exit;
+        }
+        echo "
+        <h3>Your order was successfully submitted!</h3>
+        <form action='milestone3.php' method='post'>
+        <input type='submit' value='Return Home'>
+        </form>";
+    }
+}
+
+
+
 
 function setupHTML(){
     echo "
