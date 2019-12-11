@@ -63,10 +63,10 @@ function addCookies(){
 }
 
 function buildPurchaseScreen($id, $price, $name, $quantity, $description){
-    $id -= 1;
+    $img = $id-1;
     return "<div class='card'>
-    <form action = '' method='post'>
-        <img src='".$id.".jpg' alt='Denim Jeans' style='width:100%'>
+    <form action = 'cart.php' method='post'>
+        <img src='".$img.".jpg' alt='Denim Jeans' style='width:100%'>
         <h1>".$name."</h1>
         <p class=".$price.">$19.99</p>
         <p>".$description."</p>
@@ -108,10 +108,45 @@ function buildPurchaseScreen($id, $price, $name, $quantity, $description){
 
 function setupHTML($input){
     echo "
+    <style>
+	ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+	}
+
+	li {
+	float: left;
+	}
+
+	li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	}
+
+	li a:hover {
+	background-color: #111;
+	}
+	</style>
+	</head>
+	<body>
+
+	<ul>
+	<li><a class='active' href='/milestone3.php'>Home</a></li>
+	<li><a href='/shopping.php'>Shopping</a></li>
+	<li><a href='/cart.php'>My Cart</a></li>
+	<li><a href='/orders.php'>My Orders</a></li>
+	<li><a href='/logout.php'>Logout</a></li>
+	</ul>
     <body>
     <Title>Toy Store</Title>
 
-    <h1>Welcome to the Ultimate Toy Shopping Experience</h1>
+    <h1>The Ultimate Toy Shopping Experience</h1>
 
     ".$input."
 

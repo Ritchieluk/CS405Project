@@ -7,9 +7,9 @@
 $username = $_POST["username"];
 $password = $_POST["password"];
 if ($username != null){
-	setcookie("current_user", $username, time()+3600, '/');
+	setcookie("current_user", $username, time()+10000, '/');
 }
-if(($username == null || $password == null) && !isset($_COOKIE["current_user"])){
+if(($username == null || $password == null || $username=="" || $password=="") && !isset($_COOKIE["current_user"])){
 	header("Location: ./homepage.php");
 }
 if (!($username == null && $password == null)){

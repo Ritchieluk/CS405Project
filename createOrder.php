@@ -1,7 +1,8 @@
 <?php
 
-setcookie("current_user", "", time()-3600);
 setupHTML();
+echo $_POST['customer_id'];
+
 function setupHTML(){
     echo "
     <style>
@@ -44,10 +45,7 @@ function setupHTML(){
 
     <h1>The Ultimate Toy Shopping Experience</h1>
 
-    <h3>You have been successfully logged out</h3>
-    <form action='homepage.php' method='post'>
-	<input type='submit' value='Log back in here'>
-	</form>
+    
 
     </body>
     <style>

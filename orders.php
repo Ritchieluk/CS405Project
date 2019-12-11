@@ -32,7 +32,7 @@ else {
         WHERE PERSON_ID IN (
             SELECT PERSON_ID 
             FROM PEOPLE
-            WHERE (USERNAME = 'user')
+            WHERE (USERNAME = '".$_COOKIE['current_user']."')
             )
         ) AS ORDER_INFO
     WHERE IP.INVENTORY_ID = ORDER_INFO.I_ID";
@@ -106,7 +106,7 @@ function buildTable($query_results){
 }
 function addItem($data){
     if ($data["AMT"] != null){
-        $data["PRICE"] = $data["PRICE"] * (100 - 10) / 100;
+        $data["PRICE"] = $data["PRICE"] * (100 - $data["AMT"]) / 100;
         $data["PRICE"] = strval($data["PRICE"]) . " (Had Discount of " . strval($data["AMT"]) . "%)";
     }
     echo "
@@ -118,7 +118,7 @@ function addItem($data){
         <td>$".$data["PRICE"]."</td> 
         <td><input type='submit' value='View Product Page'></td>
     </tr>
-    <input type='hidden' name='name' value='".$id."'>
+    <input type='hidden' name='name' value='".$data["INVENTORY_ID"]."'>
     </form>
     ";
 }
