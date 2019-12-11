@@ -6,6 +6,8 @@
 // remember, we stored them in a "post" variable called "professor"
 $username = $_POST["username"];
 $password = $_POST["password"];
+setcookie("employee", "", -1);
+setcookie("manager", "", -1);
 if ($username != null){
 	setcookie("current_user", $username, time()+10000, '/');
 }

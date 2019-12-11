@@ -1,13 +1,9 @@
-<html>
-    <Title>Toy Store</Title>
-    <body>
-
 <?php
 $username = $_POST["username"];
 $password = $_POST["password"];
 $action = $_POST["action_type"];
 
-if(($username == null || $password == null) && $action==null){
+if(($username == null || $password == null) && $_COOKIE['employee']==null){
 	header("Location: ./milestone3.php");
 }
 else if ($action == 'Ship It!'){
@@ -16,6 +12,12 @@ else if ($action == 'Ship It!'){
 }
 else if ($action == 'Add Item to Inventory'){
     addIt();
+}
+if ($username != null || $password != null){
+    setcookie("employee", "", time()-3600);
+    setcookie("employee", $_COOKIE['employee'], -1);
+    setcookie("manager",  $_COOKIE['manager'], -1);
+    echo $_COOKIE['employee'];
 }
 
 
@@ -70,13 +72,16 @@ else {
         $row = mysqli_fetch_assoc($q_result);
         if ($row["TYPE"] == 2 ){
             # build for employees
-            setcookie("employee", $row["PERSON_ID"], time()+10000);
+            setcookie("employee", "", time()-10000);
+            setcookie("employee", $row["PERSON_ID"], time()+3600);
             $string = "<h2>Welcome back employee '".$row['USERNAME']."'</h2>";
             setupHTML($string);
             startEmployeePage();
         }
         else if($row["TYPE"]==3){
             # build for manager
+            setcookie("employee", "", time()-10000);
+            setcookie("manager", "", time()-10000);
             setcookie("employee", $row["PERSON_ID"], time()+10000);
             setcookie("manager", $row["PERSON_ID"], time()+10000);
             $string = "<h2>Welcome back manager '".$row['USERNAME']."'</h2>";
@@ -350,7 +355,10 @@ function managerFunctions(){
 }
 
 function setupHTML($input){
-	echo "
+    echo "
+    <html>
+    <Title>Toy Store</Title>
+    
     <body>
     <style>
     ul {
