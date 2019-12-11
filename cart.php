@@ -5,7 +5,6 @@ if($_POST["cart"] != null){
 	$new_id = $_POST["cart"];
 	$_POST["cart"] = null;
 }
-
 setupHTML();
 
 # Insert ID Into User's Cart
@@ -22,6 +21,21 @@ if ($mysqli->connect_errno) {
 	exit;
 } 
 else {
+	$user_query = "
+    SELECT PERSON_ID
+	FROM PEOPLE
+	WHERE USERNAME='".$_COOKIE["current_user"]."'
+    ";
+    $user_id;
+    $q_result = $mysqli->query($user_query);
+    if ( !$q_result) {
+        echo "INSERT Query failed: ". $mysqli->error. "\n";
+        exit;
+    }
+    else {
+        $row = mysqli_fetch_assoc($q_result);
+        $user_id = $row["PERSON_ID"]; 
+    }
 	# Insert ID Into User's Cart\
 	if($new_id != null){
 		$user_query = "
@@ -44,7 +58,7 @@ else {
 			$user_query = "
 			INSERT 
 			INTO CART (INVENTORY_ID, QUANTITY, PERSON_ID)
-			VALUES (".$new_id.",1,".$_COOKIE['current_user'].")";
+			VALUES (".$new_id.",1,".$user_id.")";
 			$q_result = $mysqli->query($user_query);
 		}
 		else if ($q_result->num_rows > 0){
@@ -63,11 +77,7 @@ else {
 				$user_query = "
 				INSERT 
 				INTO CART (INVENTORY_ID, QUANTITY, PERSON_ID)
-				VALUES (".$new_id.",1,(
-					SELECT PERSON_ID 
-					FROM PEOPLE
-					WHERE (USERNAME = '".$_COOKIE['current_user']."')
-					)
+				VALUES (".$new_id.",1, ".$user_id."
 				)";
 				$q_result = $mysqli->query($user_query);
 			}

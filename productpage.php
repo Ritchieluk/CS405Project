@@ -14,6 +14,7 @@ if (!isset($_POST['cart'])){
         exit;
     } 
     else {
+        
         //echo "Checking if user ". $username. " exists </br>";
 
         // Let's write the query and store it in a variable
