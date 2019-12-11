@@ -198,7 +198,7 @@ function addItem($data){
 function addOrderForm(){
 	echo "
 	<form action='createOrder.php' method='post'>
-	<input type='submit' value='Order Items in Cart'>
+	<input type='submit' value='Purchase Items in Cart'>
 	<input type='hidden' name='customer_id' value='".$_COOKIE['current_user']."'>
 	</form>
 	";
