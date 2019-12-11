@@ -47,3 +47,16 @@ insert into PROMOTIONS (INVENTORY_ID, AMOUNT) values (8, 69);
 insert into CART values (2, 1, 1);
 insert into CART values (3, 2, 2);
 insert into CART values (8, 15, 1);
+
+insert into SALES_STATISTICS values (1, 10, 15, 50);
+insert into SALES_STATISTICS values (2, 1120, 78945, 696969);
+insert into SALES_STATISTICS values (3, 1450, 12305, 745653);
+insert into SALES_STATISTICS values (4, 712, 231135, 6421345);
+insert into SALES_STATISTICS values (5, 0, 1, 7);
+insert into SALES_STATISTICS values (6, 155, 156, 9845);
+insert into SALES_STATISTICS values (7, 231, 1654, 78452);
+insert into SALES_STATISTICS values (8, 123, 456, 789);
+insert into SALES_STATISTICS values (9, 4563, 9754, 1015445);
+
+
+
