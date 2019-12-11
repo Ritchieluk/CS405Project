@@ -64,7 +64,7 @@ function addCookies(){
 
 function buildPurchaseScreen($id, $price, $name, $quantity, $description){
     $img = strval($id-1).'.jpg';
-    if($id > 9){
+    if($id > 10){
         $img = 'https://www.jaydson.org/upload/2018/10/15/sculptors-royal-academy-of-arts-place-holder-image-l-d93378a7cd033d6a.jpg';
     }
     return "<div class='card'>

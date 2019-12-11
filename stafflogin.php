@@ -81,6 +81,7 @@ else {
             setcookie("manager", $row["PERSON_ID"], time()+10000);
             $string = "<h2>Welcome back manager '".$row['USERNAME']."'</h2>";
             setupHTML($string);
+            managerFunctions();
             startEmployeePage();
             # TODO: Add Manager functions/routes
         }
@@ -332,13 +333,20 @@ function managerFunctions(){
     echo "
     <h3>Manager Functions</h3>
     <hr>
-    <form action='stats.php' method='post'>
-    <input type='submit' name='stats' value='Sales Statistics'>
-    </form>
-    <form action='promotions.php' method='post'>
-    <input type='submit' name='promotions' value='View Promotions'>
-    </form>
-    "
+    <table>
+        <td>
+            <form action='stats.php' method='post'>
+            <input type='submit' name='stats' value='Sales Statistics'>
+            </form>
+        </td>
+        <td>
+            <form action='promotions.php' method='post'>
+            <input type='submit' name='promotions' value='View Promotions'>
+            </form>
+        </td>
+    </table>
+    <hr>
+    ";
 }
 
 function setupHTML($input){
@@ -367,6 +375,9 @@ function setupHTML($input){
     
         li a:hover {
         background-color: #111;
+        }
+        input {
+            padding: 10px;
         }
         </style>
         </head>

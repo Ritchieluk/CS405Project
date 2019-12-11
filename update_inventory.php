@@ -38,6 +38,7 @@ function setupHTML($input){
         <li><a href='/shopping.php'>Shopping</a></li>
         <li><a href='/cart.php'>My Cart</a></li>
         <li><a href='/orders.php'>My Orders</a></li>
+        <li><a href='/stafflogin.php'>Staff Functions</a></li>
         <li><a href='/logout.php'>Logout</a></li>
         </ul>
 	<Title>Toy Store</Title>
