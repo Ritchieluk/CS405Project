@@ -327,6 +327,20 @@ function addOrderItem($orderid, $inventoryid, $personid, $orderstatus, $quantity
     </tr>
     ";
 }
+
+function managerFunctions(){
+    echo "
+    <h3>Manager Functions</h3>
+    <hr>
+    <form action='stats.php' method='post'>
+    <input type='submit' name='stats' value='Sales Statistics'>
+    </form>
+    <form action='promotions.php' method='post'>
+    <input type='submit' name='promotions' value='View Promotions'>
+    </form>
+    "
+}
+
 function setupHTML($input){
 	echo "
     <body>
