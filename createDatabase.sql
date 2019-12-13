@@ -6,6 +6,7 @@ use TOYS_ORDERS;
 -- drop table ORDERS;
 -- drop table PROMOTIONS;
 -- drop table CART;
+-- drop table SALES_STATISTICS;
 
 
 create table PEOPLE (
@@ -46,4 +47,11 @@ create table CART (
 
     primary key(PERSON_ID, INVENTORY_ID)
  
+);
+
+create table SALES_STATISTICS (
+    INVENTORY_ID INT primary key,
+    WEEK_SALES int,
+    MONTH_SALES int,
+    YEAR_SALES int
 );
